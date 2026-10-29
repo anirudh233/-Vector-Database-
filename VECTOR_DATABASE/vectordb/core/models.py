@@ -4,7 +4,7 @@ from numbers import Real
 from typing import ClassVar
 import numpy as np
 
-from validation import _validate_vectors
+from .validation import _validate_vectors
 
 
 

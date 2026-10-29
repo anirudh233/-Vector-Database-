@@ -1,5 +1,5 @@
-from collection import Collection
-from models import CollectionConfig
+from .collection import Collection
+from .models import CollectionConfig
 
 
 class VectorDatabase:

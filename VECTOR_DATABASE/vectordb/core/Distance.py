@@ -1,7 +1,12 @@
 import numpy as np
 from collections.abc import Callable
 from typing import Any, Tuple
-from validation import _validate_vectors, _validate_pair, _validate_batch_size, _validate_k
+from .validation import (
+    _validate_batch_size,
+    _validate_k,
+    _validate_pair,
+    _validate_vectors,
+)
 
 def _normalize_allow_zero(vectors: np.ndarray) -> np.ndarray:
     normalized = np.zeros_like(vectors)

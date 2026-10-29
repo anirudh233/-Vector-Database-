@@ -2,7 +2,7 @@ import unittest
 from dataclasses import FrozenInstanceError
 import numpy as np
 
-from models import CollectionConfig, VectorRecord
+from VECTOR_DATABASE.vectordb.core.models import CollectionConfig, VectorRecord
 
 
 class CollectionConfigTests(unittest.TestCase):

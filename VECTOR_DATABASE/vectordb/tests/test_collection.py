@@ -2,8 +2,8 @@ import unittest
 
 import numpy as np
 
-from collection import Collection
-from models import CollectionConfig, VectorRecord
+from VECTOR_DATABASE.vectordb.core.collection import Collection
+from VECTOR_DATABASE.vectordb.core.models import CollectionConfig, VectorRecord
 
 
 class CollectionTests(unittest.TestCase):

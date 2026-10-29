@@ -2,8 +2,8 @@ import unittest
 
 import numpy as np
 
-from database import VectorDatabase
-from models import VectorRecord
+from VECTOR_DATABASE.vectordb.core.database import VectorDatabase
+from VECTOR_DATABASE.vectordb.core.models import VectorRecord
 
 
 class VectorDatabaseTests(unittest.TestCase):

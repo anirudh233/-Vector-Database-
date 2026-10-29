@@ -1,6 +1,6 @@
 import numpy as np
 
-from models import CollectionConfig, VectorRecord
+from .models import CollectionConfig, VectorRecord
 
 
 class Collection:
