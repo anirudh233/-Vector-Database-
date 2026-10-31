@@ -77,6 +77,35 @@ class CollectionTests(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.collection.insert(object())  # type: ignore[arg-type]
 
+    def test_collection_uses_vector_store_for_vectors_and_metadata_by_id(self) -> None:
+        self.assertEqual(self.collection._vector_store._dimension, 3)
+        self.assertEqual(self.collection._metadata, {})
+        self.assertFalse(hasattr(self.collection, "_records"))
+
+        self.collection.insert(VectorRecord("doc_001", np.array([1.0, 2.0, 3.0]), {"tag": "x"}))
+
+        self.assertEqual(self.collection._vector_store.count(), 1)
+        np.testing.assert_array_equal(
+            self.collection._vector_store.get("doc_001"), [1.0, 2.0, 3.0]
+        )
+        self.assertEqual(self.collection._metadata, {"doc_001": {"tag": "x"}})
+
+    def test_insert_rolls_back_vector_if_metadata_registration_fails(self) -> None:
+        class FailingMetadata(dict[str, dict[str, object]]):
+            def __setitem__(self, key: str, value: dict[str, object]) -> None:
+                raise RuntimeError("metadata registration failed")
+
+        self.collection._metadata = FailingMetadata()
+        record = VectorRecord("doc_001", np.array([1.0, 2.0, 3.0]), {})
+
+        with self.assertRaisesRegex(RuntimeError, "metadata registration failed"):
+            self.collection.insert(record)
+
+        self.assertEqual(self.collection.count(), 0)
+        self.assertFalse(self.collection.contains("doc_001"))
+        self.assertEqual(self.collection.list_ids(), [])
+        self.assertEqual(self.collection._metadata, {})
+
 
 if __name__ == "__main__":
     unittest.main()

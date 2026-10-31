@@ -5,39 +5,11 @@ from VECTOR_DATABASE.vectordb.core.collection import Collection
 from VECTOR_DATABASE.vectordb.core.database import VectorDatabase
 
 if __name__ == "__main__":
-    db = VectorDatabase()
 
-    collection = db.create_collection(
-    name="test",
-    dimension=2,
-    metric="euclidean"
-    )
 
-    collection.insert(
-    VectorRecord(
-        id="vec_1",
-        vector=np.array([1, 2]),
-        metadata={}
-                )
-                      )
+    arr =np.array([[1,3,4,5],[6,7,8,9]])
 
-    collection.insert(
-    VectorRecord(
-        id="vec_2",
-        vector=np.array([3, 4]),
-        metadata={}
-                 )
-                 ) 
-
-    vectors_name = collection.list_ids()
-    vector = []
-    for record_id in vectors_name:
-        record = collection.get(record_id)
-        vector.append(record.vector)
-
-    vectors = np.array(vector)
-    query_vector = np.array([[4, 3]])
-    arr=k_nearest_neighbors(query_vector, vectors, k=2, kind="euclidean") 
-    print("Nearest neighbor indices: ", arr)
-
-        
+    arr_slice = arr[1,:]
+    arr_slice[0] = 4 
+    print('array parameters ',arr.shape,arr_slice.shape,arr.dtype,arr_slice.dtype,arr.nbytes,arr_slice.nbytes,arr.flags.c_contiguous,arr_slice.flags.c_contiguous,arr.strides,arr_slice.strides)
+    print(arr_slice,arr)
